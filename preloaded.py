@@ -1,5 +1,11 @@
 # -*- coding: utf-8 -*-
 """
+Created on Sat Sep  7 02:39:26 2019
+
+@author: Devdarshan
+"""
+# -*- coding: utf-8 -*-
+"""
 Created on Thu Sep  5 23:34:25 2019
 
 @author: Devdarshan
@@ -27,9 +33,7 @@ from sklearn import model_selection, naive_bayes, svm
 from sklearn.metrics import accuracy_score
 import pickle
 #read data
-train = pd.read_csv('Consumer_Complaints.csv', error_bad_lines=False)
-train = train.fillna("no info")
-train.head()
+
 
 #X_train, y_train = train['Issue'].values, train['Product'].values
 #nltk.download('punkt')
@@ -70,64 +74,47 @@ def text_prepare(text):
     return text
 STOPWORDS = set(stopwords.words('english')) 
 #train test split
-Train_X, Test_X, Train_Y, Test_Y = model_selection.train_test_split(train['Issue'],train['Product'],test_size=0.3)
 
 #encoding
-Encoder = LabelEncoder()
-Train_Y = Encoder.fit_transform(Train_Y)
-Test_Y = Encoder.fit_transform(Test_Y)
 
 #vectorisation
-Tfidf_vect = TfidfVectorizer(max_features=5000)
-Tfidf_vect.fit(train['Issue'])
-Train_X_Tfidf = Tfidf_vect.transform(Train_X)
-Test_X_Tfidf = Tfidf_vect.transform(Test_X)
 
 #print(Tfidf_vect.vocabulary_)
 
 #print(Train_X_Tfidf)
 # fit the training dataset on the NB classifier
-Naive = naive_bayes.MultinomialNB()
-Naive.fit(Train_X_Tfidf,Train_Y)
-# predict the labels on validation dataset
-with open('model.pkl', 'wb') as handle:
-    pickle.dump(Naive, handle, pickle.HIGHEST_PROTOCOL)
+
 with open('model.pkl', 'rb') as handle:
     model1 = pickle.load(handle)  
+with open('vectorisation.pkl', 'rb') as handle:
+    vect1 = pickle.load(handle)
 
-
-#predictions_NB = Naive.predict(Test_X_Tfidf)
-predictions_NB = model1.predict(Test_X_Tfidf)
-#inverse the encoded words
-reversed = Encoder.inverse_transform(predictions_NB)
-print(reversed)
-#accuracy_score function to get the accuracy
-print("Naive Bayes Accuracy Score -> ",accuracy_score(predictions_NB, Test_Y)*100)
 
 #from sklearn.preprocessing import MultiLabelBinarizer
 
 #series to list conversion
-Test_X = Test_X.tolist()
+#Test_X = Test_X.tolist()
 
 #mlb = MultiLabelBinarizer(classes=sorted(tag_counts.keys()))
 #Train_Y = mlb.fit_transform(Train_Y)
-with open('model.pkl', 'wb') as handle:
-    pickle.dump(Naive, handle, pickle.HIGHEST_PROTOCOL)
+'''
+Test_X = []
 query = input("enter query: ")
 
 Test_X.insert(0,query)
 Test_X = [text_prepare(x) for x in Test_X]
-Test_X_Tfidf = Tfidf_vect.transform(Test_X)
-y_val_predicted_labels_tfidf = Naive.predict(Test_X_Tfidf)
+Test_X_Tfidf = vect1.transform(Test_X)
+y_val_predicted_labels_tfidf = model1.predict(Test_X_Tfidf)
 y_val_pred_inversed = Encoder.inverse_transform(y_val_predicted_labels_tfidf)
 print(y_val_pred_inversed[0])
+'''
 #manual prediction
 def manual_predict(query):
     #query = input("enter query: ")
     Test_X = []
     Test_X.insert(0,query)
     Test_X = [text_prepare(x) for x in Test_X]
-    Test_X_Tfidf = Tfidf_vect.transform(Test_X)
-    y_val_predicted_labels_tfidf = Naive.predict(Test_X_Tfidf)
+    Test_X_Tfidf = vect1.transform(Test_X)
+    y_val_predicted_labels_tfidf = model1.predict(Test_X_Tfidf)
     y_val_pred_inversed = Encoder.inverse_transform(y_val_predicted_labels_tfidf)
     return y_val_pred_inversed[0]
