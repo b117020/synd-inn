@@ -25,7 +25,7 @@ from nltk.corpus import wordnet as wn
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn import model_selection, naive_bayes, svm
 from sklearn.metrics import accuracy_score
-
+import pickle
 #read data
 train = pd.read_csv('Consumer_Complaints.csv', error_bad_lines=False)
 train = train.fillna("no info")
@@ -90,7 +90,14 @@ Test_X_Tfidf = Tfidf_vect.transform(Test_X)
 Naive = naive_bayes.MultinomialNB()
 Naive.fit(Train_X_Tfidf,Train_Y)
 # predict the labels on validation dataset
-predictions_NB = Naive.predict(Test_X_Tfidf)
+with open('model.pkl', 'wb') as handle:
+    pickle.dump(Naive, handle, pickle.HIGHEST_PROTOCOL)
+with open('model.pkl', 'rb') as handle:
+    model1 = pickle.load(handle)  
+
+
+#predictions_NB = Naive.predict(Test_X_Tfidf)
+predictions_NB = model1.predict(Test_X_Tfidf)
 #inverse the encoded words
 reversed = Encoder.inverse_transform(predictions_NB)
 print(reversed)
@@ -104,9 +111,8 @@ Test_X = Test_X.tolist()
 
 #mlb = MultiLabelBinarizer(classes=sorted(tag_counts.keys()))
 #Train_Y = mlb.fit_transform(Train_Y)
-
-
-#manual prediction
+with open('model.pkl', 'wb') as handle:
+    pickle.dump(Naive, handle, pickle.HIGHEST_PROTOCOL)
 query = input("enter query: ")
 
 Test_X.insert(0,query)
@@ -115,3 +121,27 @@ Test_X_Tfidf = Tfidf_vect.transform(Test_X)
 y_val_predicted_labels_tfidf = Naive.predict(Test_X_Tfidf)
 y_val_pred_inversed = Encoder.inverse_transform(y_val_predicted_labels_tfidf)
 print(y_val_pred_inversed[0])
+#manual prediction
+def manual_predict(query):
+    #query = input("enter query: ")
+    Test_X = []
+    Test_X.insert(0,query)
+    Test_X = [text_prepare(x) for x in Test_X]
+    Test_X_Tfidf = Tfidf_vect.transform(Test_X)
+    y_val_predicted_labels_tfidf = Naive.predict(Test_X_Tfidf)
+    y_val_pred_inversed = Encoder.inverse_transform(y_val_predicted_labels_tfidf)
+    return y_val_pred_inversed[0]
+from flask import Flask, request
+from flask_restful import Resource, Api
+
+app = Flask(__name__)
+api = Api(app)
+
+class predict(Resource):
+    def get(self, query):
+        return {'data': manual_predict(query)}
+
+api.add_resource(predict, '/synd/<query>')
+
+if __name__ == '__main__':
+     app.run()
