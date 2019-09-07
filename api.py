@@ -4,7 +4,7 @@ Created on Sat Sep  7 02:35:47 2019
 
 @author: Devdarshan
 """
-import synd
+import preloaded
 from flask import Flask, request
 from flask_restful import Resource, Api
 
@@ -13,7 +13,7 @@ api = Api(app)
 
 class predict(Resource):
     def get(self, query):
-        return {'data': manual_predict(query)}
+        return {'data': preloaded.manual_predict(query)}
 
 api.add_resource(predict, '/synd/<query>')
 

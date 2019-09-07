@@ -89,7 +89,8 @@ with open('model.pkl', 'rb') as handle:
 with open('vectorisation.pkl', 'rb') as handle:
     vect1 = pickle.load(handle)
 
-
+with open('encodings.pkl', 'rb') as handle:
+    Encoder = pickle.load(handle)  
 #from sklearn.preprocessing import MultiLabelBinarizer
 
 #series to list conversion
