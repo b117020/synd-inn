@@ -1,2 +1,2 @@
 # synd-inn
- voice based grievance redressal system prepared for SYND INNOVATE Hackathon
+  Voice based grievance redressal system project prepared for SYND INNOVATE Hackathon
