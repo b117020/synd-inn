@@ -13,5 +13,5 @@ The Grievance Redressal System articulates the objective to minimize instances t
 
 #### Download Apk :-
 
-[App APK](https://drive.google.com/open?id=11NEqf7aD7pRublmrUHIONfNgBtOIYOoz)
+[APK](https://drive.google.com/open?id=11NEqf7aD7pRublmrUHIONfNgBtOIYOoz)
 
