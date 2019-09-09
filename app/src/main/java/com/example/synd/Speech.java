@@ -16,6 +16,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,21 +38,34 @@ public class Speech extends AppCompatActivity {
   TextView txt, submit;
     DatabaseReference mDatabase;
 EditText editText;
-
-
+Button btn;
+     SharedPreferences sharedPreferences2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_speech);
-         txt =(TextView) findViewById(R.id.Dash);
+        btn =findViewById(R.id.logout);
+        txt =(TextView) findViewById(R.id.Dash);
          submit =(TextView) findViewById(R.id.submit);
-        SharedPreferences sharedPreferences2 = getSharedPreferences("email", Context.MODE_PRIVATE);
+         sharedPreferences2 = getSharedPreferences("PHONE", Context.MODE_PRIVATE);
         final String  email = sharedPreferences2.getString("email", "");
-        final  String pho=sharedPreferences2.getString("phone","");
-//        if(email.equals("")) {
-//            Intent intent=new Intent(Speech.this, s_signup.class );
-//            startActivity(intent);
-//        }
+        final  String pho=sharedPreferences2.getString("PHONE1","");
+
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent =new Intent(Speech.this,s_signup.class);
+                startActivity(intent);
+            }
+        });
+
+
+        Toast.makeText(this, email, Toast.LENGTH_SHORT).show();
+        if(email.equals("")) {
+            Intent intent12=new Intent(Speech.this, s_signup.class );
+            startActivity(intent12);
+        }
 
 
         editText=(EditText) findViewById(R.id.voice);
@@ -66,7 +80,7 @@ EditText editText;
          submit.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View v) {
-                 mDatabase = FirebaseDatabase.getInstance().getReference().child("+916351511532").push();
+                 mDatabase = FirebaseDatabase.getInstance().getReference().child(pho).push();
 
                  String url="http://devddm.pythonanywhere.com/synd/"+ editText.getText().toString();
                  JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,url,null ,

@@ -20,7 +20,7 @@
             android:layout_marginTop="100dp"
             android:ems="10"
             android:gravity="center"
-            android:hint="Username"
+            android:hint="Email"
             android:inputType="textPersonName"
             android:selectAllOnFocus="true"
              />
@@ -41,7 +41,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
-
+              android:background="@drawable/roundedbtn"
 
             android:text="Login"
             android:textSize="18sp" />
@@ -58,6 +58,7 @@
             android:visibility="visible" />
 
         <Button
+            android:background="@drawable/roundedbtn"
             android:id="@+id/signupbtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

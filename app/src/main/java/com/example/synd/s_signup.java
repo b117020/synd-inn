@@ -80,10 +80,10 @@ EditText phone;
             public void onComplete(@NonNull Task <AuthResult> task) {
                 if(task.isSuccessful())
                 {
-                    SharedPreferences sharedPreferences = getSharedPreferences("email", Context.MODE_PRIVATE);
+                    SharedPreferences sharedPreferences = getSharedPreferences("PHONE", Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString("email", ema);
-                    editor.putString("phone", phone.getText().toString().trim());
+                    editor.putString("PHONE1", phone.getText().toString().trim());
 
                     editor.apply();
                     Toast.makeText(s_signup.this, "User register successfull", Toast.LENGTH_SHORT).show();

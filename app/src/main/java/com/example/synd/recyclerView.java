@@ -1,6 +1,8 @@
 package com.example.synd;
 
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -30,7 +32,11 @@ public class recyclerView extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         arraylist = new ArrayList <>();
-        mDatabase1 = FirebaseDatabase.getInstance().getReference().child("+916351511532");
+
+        SharedPreferences settings = getSharedPreferences("PHONE", Context.MODE_PRIVATE);
+        final String pref = settings.getString("PHONE1", "");
+        Toast.makeText(this, pref, Toast.LENGTH_SHORT).show();
+        mDatabase1 = FirebaseDatabase.getInstance().getReference().child(pref);
 
       mDatabase1.addValueEventListener(new ValueEventListener() {
           @Override

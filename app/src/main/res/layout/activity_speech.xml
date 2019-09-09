@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -11,42 +11,56 @@
         android:id="@+id/voice"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
 
-        android:hint="You will see input here" />
+
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="464dp"
+        android:gravity="center"
+        android:hint="Long press mic, to record" />
 
     <ImageButton
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
 
-        android:layout_gravity="center|center_horizontal"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="155dp"
+        android:layout_marginBottom="336dp"
         android:background="@drawable/mic" />
 
     <TextView
         android:id="@+id/submit"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-
+        android:layout_marginEnd="64dp"
+        android:layout_marginBottom="227dp"
+        android:gravity="center"
         android:text="Submit Complaint"
         android:textSize="24sp" />
 
     <TextView
         android:id="@+id/Dash"
-        android:layout_width="match_parent"
+
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-
+        android:layout_marginEnd="68dp"
+        android:layout_marginBottom="143dp"
+        android:gravity="center"
         android:text="Go to Dashboard"
         android:textSize="24sp" />
-</LinearLayout>
+
+    <Button
+        android:background="@drawable/roundedbtn"
+        android:id="@+id/logout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="38dp"
+        android:text="Logout"
+        android:textSize="24sp"/>
+</RelativeLayout>
